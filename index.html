@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ad Detection</title>
+  <style>
+    body {
+      height: 2000px;
+      width: 2500px;
+    }
+    #ad {
+      width: 300px;
+      height: 250px;
+      background: #ee7202;
+      position: relative;
+      left: 100px;
+      top: 100px;
+    }
+    .results{
+      position: fixed;
+      background-color: lightgrey;
+      padding: 5px;
+      z-index: 10;
+    }
+    #insecs{
+      padding-right: 10px;
+    }
+    .table_class{
+      display: flex;
+    }
+    .tbody_class{
+      display: flex;
+      flex:1;
+    }
+    .tr_class{
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="results"><h3>Viewability Measurement</h3> 
+      <table class="table_class">
+        <tbody class="tbody_class" >
+          <tr class="tr_class">
+            <td>Ad</td>
+            <td id="ad_time"></td>
+            <td id="viewablePercentage"></td>
+          </tr>
+        </tbody>
+        </table>
+      <!-- Ad <span id="insecs"></span><span id="viewablePercentage"></span> -->
+    </div>
+<div id="ad">
+  ADVERTISEMENT
+</div>
+
+</body>
+<script src="script.js"></script>
+</html>
