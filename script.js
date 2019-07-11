@@ -4,19 +4,36 @@
  *                                                                                              *
  ************************************************************************************************/
 var adIsViewable = true,
-adPercentage=0,
-  viewabilityTime = 0,
-  adElement = document.getElementById("ad"),viewElement = document.getElementById("ad_time"),viewablePercentage = document.getElementById("viewablePercentage"),myInterval=false;
-viewElement.innerHTML=`${0} s`;
+    adPercentage=0,
+    viewabilityTime = 0,
+    adElement = document.getElementById("ad"),
+    viewElement = document.getElementById("ad_time"),
+    viewablePerElement = document.getElementById("viewablePercentage"),
+    countId = document.getElementById("count"),
+    myInterval=false,
+    clicks=0,clickInterval=false;
+    viewElement.innerHTML=`${0} s`;
 /**
  * Logs the viewability values in the console
  *
  * @override
  */
+/************************************************************************************************
+ *                                                                                              *
+ *                              YOUR IMPLEMENTATION                                             *
+ *                                                                                              *
+ ************************************************************************************************/
 // window.log = function () {
 //   console.log("Ad is viewable: ", adIsViewable, "\nViewability time of the ad in sec:", viewabilityTime);
 // };
-function isElementInView(element) {
+
+
+/**
+ * 
+ * @param element of advertisement
+ * checks whether if element is visible in the viewport 
+ */
+let isElementInView = (element) => {
   let elementBoundingBox = element.getBoundingClientRect();
   let elementTopY = elementBoundingBox.top;
   let elementTopX = elementBoundingBox.left;
@@ -35,33 +52,66 @@ function isElementInView(element) {
     if(myInterval)
       stopTimer();
   }
-  viewablePercentage.innerHTML=adPercentage.toFixed(0)+' %';
+
+  if(adPercentage < 25){
+      viewablePerElement.classList.remove('pink','green');
+      viewablePerElement.classList.add('red');
+  }
+  else if(adPercentage > 25 &&  adPercentage < 75){
+      viewablePerElement.classList.remove('red','green');
+      viewablePerElement.classList.add('pink');
+  }else {
+      viewablePerElement.classList.remove('pink','red');
+      viewablePerElement.classList.add('green');
+  }
+  viewablePerElement.innerHTML=adPercentage.toFixed(0)+' %';
 }
+
+
+
+
 isElementInView(adElement);
-window.addEventListener('scroll',function(){
+
+
+this.addEventListener('scroll',function(){
   isElementInView(adElement);
 });
-window.addEventListener('focus', function(){
+
+
+this.addEventListener('focus', ()=>{
+  if(adIsViewable)
     startTimer();
 });
-window.addEventListener('blur', stopTimer);
-function timerHandler() { 
+
+
+this.addEventListener('blur', stopTimer);
+
+
+function timerHandler  ()  { 
   viewabilityTime+=0.5;
   viewElement.innerHTML= viewabilityTime.toFixed(1)+' s';
 }
 
 // Start timer
-function startTimer() {
+function startTimer ()  {
   myInterval = window.setInterval(timerHandler, 500);
+  viewElement.classList.remove('red');
+  viewElement.classList.add('green');
 }
 
 // Stop timer
-function stopTimer() {
+function stopTimer(){
+  viewElement.classList.remove('green');
+  viewElement.classList.add('red');
   window.clearInterval(myInterval);
   myInterval = false;
 }
-/************************************************************************************************
- *                                                                                              *
- *                              YOUR IMPLEMENTATION                                             *
- *                                                                                              *
- ************************************************************************************************/
+ let onClick = () => {
+    clearTimeout(clickInterval);
+    clicks++;
+    countId.innerHTML=clicks;
+    clickInterval = setTimeout(() =>{
+    countId.innerHTML='';
+}, 1000);
+}
+
