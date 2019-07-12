@@ -32,6 +32,8 @@ var adIsViewable = true,
  * 
  * @param element of advertisement
  * checks whether if element is visible in the viewport 
+ * calculates the percentage of the AD visible in the viewport
+ * Triggers the timer if AD is viewable
  */
 let isElementInView = (element) => {
   let elementBoundingBox = element.getBoundingClientRect();
@@ -40,6 +42,10 @@ let isElementInView = (element) => {
   let elementRightX = elementBoundingBox.left+elementBoundingBox.width;
   let elementBottomY = elementBoundingBox.top + elementBoundingBox.height;
   adIsViewable =elementBottomY > 0 && elementRightX > 0 && elementBoundingBox.bottom <=(window.innerHeight || document.documentElement.clientHeight) && elementBoundingBox.right <=(window.innerWidth|| document.documentElement.clientWidth);
+  
+/**
+ * Calculating the percentage of viewability and trigger timer if AD is viewable
+ */
   if(adIsViewable){
     let visibleHeight = (elementTopY > 0) ? elementBoundingBox.height : elementBottomY;
     let visibleLength = (elementTopX>0) ? elementBoundingBox.width : elementRightX;
@@ -53,6 +59,7 @@ let isElementInView = (element) => {
       stopTimer();
   }
 
+  //Styling the display % of viewable portion of Ad 
   if(adPercentage < 25){
       viewablePerElement.classList.remove('pink','green');
       viewablePerElement.classList.add('red');
@@ -72,18 +79,19 @@ let isElementInView = (element) => {
 
 isElementInView(adElement);
 
-
+//Event listener of scroll
 this.addEventListener('scroll',function(){
+  //Fire the isElementView function to check whether element is viewable or not and percentage of viewability
   isElementInView(adElement);
 });
 
-
+//Event Listener of Focus
 this.addEventListener('focus', ()=>{
   if(adIsViewable)
     startTimer();
 });
 
-
+//Event listener of blur
 this.addEventListener('blur', stopTimer);
 
 
@@ -106,12 +114,14 @@ function stopTimer(){
   window.clearInterval(myInterval);
   myInterval = false;
 }
+
+//OnClick display the count of number of clicks in the middle of the AD Div
  let onClick = () => {
     clearTimeout(clickInterval);
     clicks++;
     countId.innerHTML=clicks;
     clickInterval = setTimeout(() =>{
-    countId.innerHTML='';
-}, 1000);
+        countId.innerHTML='';
+    }, 1000);
 }
 
