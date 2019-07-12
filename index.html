@@ -17,7 +17,8 @@
     }
     .results{
       position: fixed;
-      background-color: lightgrey;
+      border: 1px solid slategrey;
+      background-color: transparent;
       padding: 5px;
       z-index: 10;
     }
@@ -30,11 +31,50 @@
     .tbody_class{
       display: flex;
       flex:1;
+      flex-direction: column;
     }
     .tr_class{
       display: flex;
       flex: 1;
       justify-content: space-between;
+    }
+    .td_class{
+      flex:33.33%;
+    }
+    .advertisement_container{
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .advertisement_item_1{
+      display:flex;
+      flex:30%;
+      justify-content: center;
+    }
+    .advertisement_item_2{
+      display:flex;
+      flex:60%;
+      justify-content: center;
+      font-size: 60px;
+      color: darkturquoise;
+    }
+    .advertisement_item_3{
+      display:flex;
+      flex:10%;
+      flex-direction: row-reverse;
+      padding: 5px;
+    }
+    #ad_time,#viewablePercentage{
+      font-weight: bold;
+    }
+    #ad_time.green, #viewablePercentage.green{
+      color: darkgreen;
+    }
+    #ad_time.red, #viewablePercentage.red{
+      color: red;
+    }
+    #viewablePercentage.pink{
+      color: hotpink;
     }
   </style>
 </head>
@@ -44,16 +84,22 @@
       <table class="table_class">
         <tbody class="tbody_class" >
           <tr class="tr_class">
-            <td>Ad</td>
-            <td id="ad_time"></td>
-            <td id="viewablePercentage"></td>
+            <td class="td_class"></td>
+            <td class="td_class">Time</td>
+            <td class="td_class">View</td>
+          </tr>
+          <tr class="tr_class">
+            <td class="td_class">Ad</td>
+            <td class="td_class"><span id="ad_time"></span></td>
+            <td class="td_class"><span id="viewablePercentage"></span></td>
           </tr>
         </tbody>
         </table>
-      <!-- Ad <span id="insecs"></span><span id="viewablePercentage"></span> -->
     </div>
-<div id="ad">
-  ADVERTISEMENT
+<div class="advertisement_container" id="ad" onclick="onClick()">
+  <div class="advertisement_item_1">ADVERTISEMENT</div>
+  <div class="advertisement_item_2" id="count"></div>
+  <div class="advertisement_item_3">Click AD</div>
 </div>
 
 </body>
